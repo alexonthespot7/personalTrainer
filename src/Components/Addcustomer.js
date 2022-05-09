@@ -7,8 +7,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddIcon from '@mui/icons-material/Add';
 
-//check
-
 function Addcustomer({ addCustomer }) {
   const [open, setOpen] = useState(false);
 
