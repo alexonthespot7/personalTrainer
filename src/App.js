@@ -23,6 +23,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import TrainingList from './Components/TrainingList';
 import CustomerList from './Components/Customerlist';
 import Calendar from './Components/Calendar';
+import Statistics from './Components/Statistics';
 
 const drawerWidth = 240;
 
@@ -145,6 +146,7 @@ function App() {
           {value === 'Customers' && <CustomerList />}
           {value === 'Trainings' && <TrainingList />}
           {value === 'Calendar' && <Calendar />}
+          {value === 'Statistics' && <Statistics />}
         </Main>
       </Box>
     </div>
