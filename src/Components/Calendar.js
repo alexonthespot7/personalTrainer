@@ -9,8 +9,9 @@ import add from 'date-fns/add';
 function Calendar() {
     const [trainings, setTrainings] = useState([]);
     const [ready, setReady] = useState(false);
+    const [events, setEvents] = useState([]);
 
-    let events = [];
+    let eventsVar = [];
 
     useEffect(() => {
         fetchTrainings();
@@ -32,11 +33,11 @@ function Calendar() {
         train = {
           title: params.activity + ' / ' + params.customer.firstname + ' ' + params.customer.lastname,
           start: new Date(params.date),
-          end: add(new Date(params.date), {minutes: params.duration}),
-          overlap: true
+          end: add(new Date(params.date), {minutes: params.duration})
         };
-        events.push(train);
+        eventsVar.push(train);
       });
+      setEvents(eventsVar);
       setReady(false);
     };
   
