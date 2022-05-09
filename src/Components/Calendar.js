@@ -37,6 +37,7 @@ function Calendar() {
         };
         events.push(train);
       });
+      setReady(false);
     };
   
   return (
