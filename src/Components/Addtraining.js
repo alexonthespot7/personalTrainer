@@ -38,7 +38,7 @@ function Addtraining({ paramss, addTraining }) {
   };
 
   const inputChanged = (event) => {
-      setTraining({...training, [event.target.name]: event.target.value});
+    setTraining({...training, [event.target.name]: event.target.value});
   };
 
   const handleChangeDate = (newValue) => {

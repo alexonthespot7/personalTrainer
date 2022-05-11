@@ -30,11 +30,19 @@ function Calendar() {
     if (ready) {
       let train = {};
       trainings.map(params =>  {
-        train = {
-          title: params.activity + ' / ' + params.customer.firstname + ' ' + params.customer.lastname,
-          start: new Date(params.date),
-          end: add(new Date(params.date), {minutes: params.duration})
-        };
+        if (params.customer !== null) {
+          train = {
+            title: params.activity + ' / ' + params.customer.firstname + ' ' + params.customer.lastname,
+            start: new Date(params.date),
+            end: add(new Date(params.date), {minutes: params.duration})
+          };
+        } else {
+          train = {
+            title: null,
+            start: new Date(params.date),
+            end: add(new Date(params.date), {minutes: params.duration})
+          };
+        }
         eventsVar.push(train);
       });
       setEvents(eventsVar);

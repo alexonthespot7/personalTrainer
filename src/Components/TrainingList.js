@@ -18,7 +18,11 @@ function TrainingList() {
   }, []);
   
   const nameValueGetter = (params) => {
-    return params.data.customer.firstname + ' ' + params.data.customer.lastname;
+    if (params.data.customer === null) {
+      return "null";
+    } else {
+      return params.data.customer.firstname + ' ' + params.data.customer.lastname;
+    };
   };
 
   const dateValueGetter = (params) => {
