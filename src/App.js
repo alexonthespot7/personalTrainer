@@ -104,7 +104,7 @@ function App() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div">
-              PersonalTrainer
+              Personal Trainer
             </Typography>
           </Toolbar>
         </AppBar>
