@@ -1,19 +1,18 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
+
 import { AgGridReact } from 'ag-grid-react';
 
 import Addcustomer from './Addcustomer';
 import Editcustomer from './Editcustomer';
 import Addtraining from './Addtraining';
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-material.css';
-
 import DeleteIcon from '@mui/icons-material/Delete';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
+
+import { CircularProgress, Container, IconButton, Snackbar, Button, Stack } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -22,6 +21,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function CustomerList() {
   const gridRef = useRef();
   const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [addCustomerSnack, setAddCusSnack] = useState(false);
   const [editcustomerSnack, setEdCusSnack] = useState(false);
@@ -33,37 +33,47 @@ function CustomerList() {
     fetchCustomers();
   }, []);
 
+  const fetchCustomers = async () => {
+    setLoading(true);
+    try {
+      fetch('https://traineeapp.azurewebsites.net/api/customers')
+        .then(response => response.json())
+        .then(data => {
+          setCustomers(data.content);
+          setLoading(false);
+        })
+        .catch(err => console.error(err))
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const onBtnExport = useCallback(() => {
     gridRef.current.api.exportDataAsCsv();
   }, []);
 
-  const fetchCustomers = () => {
-    fetch('https://traineeapp.azurewebsites.net/api/customers')
-      .then(response => response.json())
-      .then(data => setCustomers(data.content))
-      .catch(err => console.error(err))
-  };
-
   const linkGetter = (params) => {
     return params.data.links[0].href;
-  };
+  }
 
-  const addCustomer = (newCustomer) => {
-    fetch('https://traineeapp.azurewebsites.net/api/customers', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newCustomer)
-    })
-      .then(response => {
-        if (response.ok) {
-          fetchCustomers();
-          setAddCusSnack(true);
-        } else {
-          alert('Something went wrong during the customer adding!');
-        }
-      })
-      .catch(err => console.error(err));
-  };
+  const addCustomer = async (newCustomer) => {
+    try {
+      const response = await fetch('https://traineeapp.azurewebsites.net/api/customers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newCustomer),
+      });
+
+      if (response.ok) {
+        await fetchCustomers();
+        setAddCusSnack(true);
+      } else {
+        alert('Something went wrong during the customer adding!');
+      }
+    } catch (error) {
+      alert('Something went wrong during the customer adding!');
+    }
+  }
 
   const deleteCustomer = (link) => {
     if (window.confirm('Are you sure you want to delete this customer?')) {
@@ -81,40 +91,44 @@ function CustomerList() {
     }
   };
 
-  const updateCustomer = (updatedCustomer, link) => {
-    fetch(link, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedCustomer)
-    })
-      .then(response => {
-        if (response.ok) {
-          fetchCustomers();
-          setEdCusSnack(true);
-        } else {
-          alert('Something went wrong during the customer info updating');
-        }
-      })
-      .catch(err => console.error(err))
-  };
+  const updateCustomer = async (updatedCustomer, link) => {
+    try {
+      const response = await fetch(link, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedCustomer),
+      });
 
-  const addTraining = (newTraining) => {
-    fetch('https://traineeapp.azurewebsites.net/api/trainings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newTraining)
-    })
-      .then(response => {
-        if (response.ok) {
-          setAddTrainSnack(true);
-        } else {
-          alert('Something went wrong during the customer adding!');
-        }
-      })
-      .catch(err => console.error(err))
-  };
+      if (response.ok) {
+        await fetchCustomers();
+        setEdCusSnack(true);
+      } else {
+        alert('Something went wrong during the customer info updating');
+      }
+    } catch (error) {
+      alert('Something went wrong during the customer info updating');
+    }
+  }
 
-  const [columns, setColumns] = useState([
+  const addTraining = async (newTraining) => {
+    try {
+      const response = await fetch('https://traineeapp.azurewebsites.net/api/trainings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newTraining),
+      });
+
+      if (response.ok) {
+        setAddTrainSnack(true);
+      } else {
+        alert('Something went wrong during the customer adding!');
+      }
+    } catch (error) {
+      alert('Something went wrong during the customer adding!');
+    }
+  }
+
+  const columns = [
     { headerName: 'First name', field: 'firstname', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 130 },
     { headerName: 'Last name', field: 'lastname', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 130 },
     { field: 'email', sortable: true, filter: true, width: 250, cellStyle: { 'text-align': 'left' } },
@@ -126,7 +140,7 @@ function CustomerList() {
       headerName: '',
       width: 150,
       field: 'links.0.href',
-      cellRenderer: paramss => <Addtraining paramss={paramss} addTraining={addTraining} />
+      cellRenderer: trainingParams => <Addtraining trainingParams={trainingParams} addTraining={addTraining} />
     },
     {
       headerName: '',
@@ -143,7 +157,24 @@ function CustomerList() {
           <DeleteIcon style={{ color: 'red' }} />
         </IconButton>
     }
-  ]);
+  ];
+
+  if (loading) {
+    return (
+      <Container
+        component="main"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '80vh',
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -168,18 +199,40 @@ function CustomerList() {
         onClose={() => setOpen(false)}
         message='Customer was deleted successfully'
       />
-      <Snackbar open={addCustomerSnack} autoHideDuration={3000} onClose={() => setAddCusSnack(false)}>
-        <Alert onClose={() => setAddCusSnack(false)} severity="success" sx={{ width: '100%' }}>
+      <Snackbar
+        open={addCustomerSnack}
+        autoHideDuration={3000}
+        onClose={() => setAddCusSnack(false)}
+      >
+        <Alert
+          onClose={() => setAddCusSnack(false)}
+          severity="success" sx={{ width: '100%' }}
+        >
           New customer was added successfully!
         </Alert>
       </Snackbar>
-      <Snackbar open={editcustomerSnack} autoHideDuration={3000} onClose={() => setEdCusSnack(false)}>
-        <Alert onClose={() => setEdCusSnack(false)} severity="success" sx={{ width: '100%' }}>
+      <Snackbar
+        open={editcustomerSnack}
+        autoHideDuration={3000}
+        onClose={() => setEdCusSnack(false)}
+      >
+        <Alert
+          onClose={() => setEdCusSnack(false)}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
           Customer info was updated successfully!
         </Alert>
       </Snackbar>
-      <Snackbar open={addTrainingSnack} autoHideDuration={3000} onClose={() => setAddTrainSnack(false)}>
-        <Alert onClose={() => setAddTrainSnack(false)} severity="success" sx={{ width: '100%' }}>
+      <Snackbar
+        open={addTrainingSnack}
+        autoHideDuration={3000}
+        onClose={() => setAddTrainSnack(false)}
+      >
+        <Alert
+          onClose={() => setAddTrainSnack(false)}
+          severity="success" sx={{ width: '100%' }}
+        >
           New training was added successfully!
         </Alert>
       </Snackbar>

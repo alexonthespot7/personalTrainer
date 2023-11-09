@@ -15,27 +15,27 @@ function Addcustomer({ addCustomer }) {
     streetaddress: '',
     postcode: '',
     city: ''
-  };
+  }
 
   const [customer, setCustomer] = useState({ ...initialCustomerState });
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
+  }
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }
 
   const inputChanged = (event) => {
     setCustomer({ ...customer, [event.target.name]: event.target.value });
-  };
+  }
 
   const handleSave = () => {
     addCustomer(customer);
     setCustomer({ ...initialCustomerState });
     setOpen(false);
-  };
+  }
 
   return (
     <div>
