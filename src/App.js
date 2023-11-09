@@ -13,15 +13,15 @@ function App() {
 
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
-  };
+  }
 
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
-  };
+  }
 
   const changeSelectedCategory = (text) => {
     setSelectedCategory(text);
-  };
+  }
 
   return (
     <div className="App">

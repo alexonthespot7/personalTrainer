@@ -13,34 +13,34 @@ import MenuItem from '@mui/material/MenuItem';
 
 const activities = ['Jogging', 'Boxing', 'Cycling', 'Walking', 'Gym training', 'Spinning', 'Zumba'];
 
-function Addtraining({ paramss, addTraining }) {
+function Addtraining({ trainingParams, addTraining }) {
   const [open, setOpen] = useState(false);
 
   const initialTrainingState = {
     date: '',
     activity: '',
     duration: '',
-    customer: paramss.value
-  };
+    customer: trainingParams.value
+  }
 
   const [training, setTraining] = useState({ ...initialTrainingState });
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
+  }
 
   const handleClose = () => {
     setOpen(false);
     setTraining({ ...initialTrainingState });
-  };
+  }
 
   const inputChanged = (event) => {
     setTraining({ ...training, [event.target.name]: event.target.value });
-  };
+  }
 
   const handleChangeDate = (newValue) => {
     setTraining({ ...training, date: newValue });
-  };
+  }
 
   const handleSave = () => {
     addTraining(training);
@@ -54,7 +54,7 @@ function Addtraining({ paramss, addTraining }) {
         ADD TRAINING
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add training ({paramss.data.firstname} {paramss.data.lastname})</DialogTitle>
+        <DialogTitle>Add training ({trainingParams.data.firstname} {trainingParams.data.lastname})</DialogTitle>
         <DialogContent>
           <Stack spacing={2} marginTop={2}>
             <TextField

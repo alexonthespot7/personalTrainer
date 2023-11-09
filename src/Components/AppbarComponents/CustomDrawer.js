@@ -29,7 +29,7 @@ const Sidebar = ({ changeSelectedCategory }) => {
             ))}
         </List>
     );
-};
+}
 
 export const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -64,6 +64,6 @@ const CustomDrawer = ({ handleDrawerClose, isDrawerOpen, changeSelectedCategory 
             <Sidebar changeSelectedCategory={changeSelectedCategory} />
         </Drawer>
     );
-};
+}
 
 export default CustomDrawer;

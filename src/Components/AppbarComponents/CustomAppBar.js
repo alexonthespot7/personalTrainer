@@ -44,6 +44,6 @@ const CustomAppBar = ({ handleDrawerOpen, isDrawerOpen }) => {
             </Toolbar>
         </AppBar>
     );
-};
+}
 
 export default CustomAppBar;

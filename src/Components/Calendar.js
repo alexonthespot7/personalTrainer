@@ -5,49 +5,64 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 import add from 'date-fns/add';
+import { CircularProgress } from '@mui/material';
+import { Container } from '@mui/system';
 
 function Calendar() {
   const [trainings, setTrainings] = useState([]);
   const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
-
-  let eventsVar = [];
 
   useEffect(() => {
     fetchTrainings();
   }, []);
 
-  const fetchTrainings = () => {
-    fetch('https://traineeapp.azurewebsites.net/gettrainings')
-      .then(response => response.json())
-      .then(data => {
-        setTrainings(data);
-        setReady(true);
-      })
-      .catch(err => console.error(err))
-  };
+  const fetchTrainings = async () => {
+    try {
+      const response = await fetch('https://traineeapp.azurewebsites.net/gettrainings');
+      const data = await response.json();
+      setTrainings(data);
+      setReady(true);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   if (ready) {
-    let train = {};
-    trainings.map(params => {
-      if (params.customer !== null) {
-        train = {
-          title: params.activity + ' / ' + params.customer.firstname + ' ' + params.customer.lastname,
-          start: new Date(params.date),
-          end: add(new Date(params.date), { minutes: params.duration })
-        };
-      } else {
-        train = {
-          title: null,
-          start: new Date(params.date),
-          end: add(new Date(params.date), { minutes: params.duration })
-        };
-      }
-      eventsVar.push(train);
+    const eventsVar = trainings.map(params => {
+      const title = params.customer
+        ? `${params.activity} / ${params.customer.firstname} ${params.customer.lastname}`
+        : null;
+
+      return {
+        title,
+        start: new Date(params.date),
+        end: add(new Date(params.date), { minutes: params.duration })
+      };
     });
     setEvents(eventsVar);
     setReady(false);
-  };
+    setLoading(false);
+  }
+
+  if (loading) {
+    return (
+      <Container
+        component="main"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '80vh',
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
+  }
+
 
   return (
     <FullCalendar
