@@ -7,10 +7,6 @@ import CustomAppBar from './Components/AppbarComponents/CustomAppBar';
 import CustomDrawer from './Components/AppbarComponents/CustomDrawer';
 import MainContent from './Components/AppbarComponents/MainContent';
 
-
-
-
-
 function App() {
   const [selectedCategory, setSelectedCategory] = React.useState('Customers');
 
