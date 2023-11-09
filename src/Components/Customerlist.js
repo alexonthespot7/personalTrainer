@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import {AgGridReact} from 'ag-grid-react';
+import { AgGridReact } from 'ag-grid-react';
 
 import Addcustomer from './Addcustomer';
 import Editcustomer from './Editcustomer';
@@ -27,7 +27,7 @@ function CustomerList() {
   const [editcustomerSnack, setEdCusSnack] = useState(false);
   const [addTrainingSnack, setAddTrainSnack] = useState(false);
 
-  
+
 
   useEffect(() => {
     fetchCustomers();
@@ -38,10 +38,10 @@ function CustomerList() {
   }, []);
 
   const fetchCustomers = () => {
-    fetch('https://customerrest.herokuapp.com/api/customers')
-    .then(response => response.json())
-    .then(data => setCustomers(data.content))
-    .catch(err => console.error(err))
+    fetch('https://traineeapp.azurewebsites.net/api/customers')
+      .then(response => response.json())
+      .then(data => setCustomers(data.content))
+      .catch(err => console.error(err))
   };
 
   const linkGetter = (params) => {
@@ -49,11 +49,11 @@ function CustomerList() {
   };
 
   const addCustomer = (newCustomer) => {
-    fetch('https://customerrest.herokuapp.com/api/customers', {
-        method: 'POST', 
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newCustomer)
-      })
+    fetch('https://traineeapp.azurewebsites.net/api/customers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newCustomer)
+    })
       .then(response => {
         if (response.ok) {
           fetchCustomers();
@@ -68,42 +68,42 @@ function CustomerList() {
   const deleteCustomer = (link) => {
     if (window.confirm('Are you sure you want to delete this customer?')) {
       fetch(link, { method: 'DELETE' })
-      .then(response => {
-      if (!response.ok) {
-        alert('Something went wrong in deletion');
-      }
-      else {
-        fetchCustomers();
-        setOpen(true);
-      }
-    })
-      .catch(err => console.error(err))
+        .then(response => {
+          if (!response.ok) {
+            alert('Something went wrong in deletion');
+          }
+          else {
+            fetchCustomers();
+            setOpen(true);
+          }
+        })
+        .catch(err => console.error(err))
     }
   };
 
   const updateCustomer = (updatedCustomer, link) => {
     fetch(link, {
       method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedCustomer)
     })
-    .then(response => {
-      if (response.ok) {
-        fetchCustomers();
-        setEdCusSnack(true);
-      } else {
-        alert('Something went wrong during the customer info updating');
-      }
-    })
-    .catch(err => console.error(err))
+      .then(response => {
+        if (response.ok) {
+          fetchCustomers();
+          setEdCusSnack(true);
+        } else {
+          alert('Something went wrong during the customer info updating');
+        }
+      })
+      .catch(err => console.error(err))
   };
 
   const addTraining = (newTraining) => {
-    fetch('https://customerrest.herokuapp.com/api/trainings', {
-        method: 'POST', 
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newTraining)
-      })
+    fetch('https://traineeapp.azurewebsites.net/api/trainings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newTraining)
+    })
       .then(response => {
         if (response.ok) {
           setAddTrainSnack(true);
@@ -115,43 +115,43 @@ function CustomerList() {
   };
 
   const [columns, setColumns] = useState([
-    {headerName: 'First name', field: 'firstname', sortable: true, filter: true, cellStyle: {'text-align': 'left'}, width: 130},
-    {headerName: 'Last name', field: 'lastname', sortable: true, filter: true, cellStyle: {'text-align': 'left'}, width: 130},
-    {field: 'email', sortable: true, filter: true, width: 250, cellStyle: {'text-align': 'left'}},
-    {field: 'phone', sortable: true, filter: true, width: 160, cellStyle: {'text-align': 'left'}},
-    {headerName: 'Address', field: 'streetaddress', sortable: true, filter: true, width: 180, cellStyle: {'text-align': 'left'}},
-    {field: 'postcode', sortable: true, filter: true, cellStyle: {'text-align': 'left'}, width: 120},
-    {field: 'city', sortable: true, filter: true, cellStyle: {'text-align': 'left'}, width: 150},
+    { headerName: 'First name', field: 'firstname', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 130 },
+    { headerName: 'Last name', field: 'lastname', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 130 },
+    { field: 'email', sortable: true, filter: true, width: 250, cellStyle: { 'text-align': 'left' } },
+    { field: 'phone', sortable: true, filter: true, width: 160, cellStyle: { 'text-align': 'left' } },
+    { headerName: 'Address', field: 'streetaddress', sortable: true, filter: true, width: 180, cellStyle: { 'text-align': 'left' } },
+    { field: 'postcode', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 120 },
+    { field: 'city', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 150 },
     {
-        headerName: '',
-        width: 150,
-        field: 'links.0.href',
-        cellRenderer: paramss => <Addtraining paramss={paramss} addTraining={addTraining}/>
+      headerName: '',
+      width: 150,
+      field: 'links.0.href',
+      cellRenderer: paramss => <Addtraining paramss={paramss} addTraining={addTraining} />
     },
     {
-        headerName: '',
-        width: 100,
-        field: 'links.0.href',
-        cellRenderer: params => <Editcustomer params={params} updateCustomer={updateCustomer}/>
+      headerName: '',
+      width: 100,
+      field: 'links.0.href',
+      cellRenderer: params => <Editcustomer params={params} updateCustomer={updateCustomer} />
     },
     {
-        headerName: '',
-        valueGetter: linkGetter,
-        width: 100,
-        cellRenderer: params => 
+      headerName: '',
+      valueGetter: linkGetter,
+      width: 100,
+      cellRenderer: params =>
         <IconButton onClick={() => deleteCustomer(params.value)}>
           <DeleteIcon style={{ color: 'red' }} />
         </IconButton>
     }
   ]);
 
-  return(
+  return (
     <>
       <Stack spacing={2} direction="row">
         <Addcustomer addCustomer={addCustomer} />
-        <Button variant="text" onClick={onBtnExport} style={{marginBottom: 20}}>Export</Button>
+        <Button variant="text" onClick={onBtnExport} style={{ marginBottom: 20 }}>Export</Button>
       </Stack>
-      <div className="ag-theme-material" style={{height: 500, width: '100%', margin: 'auto'}}>
+      <div className="ag-theme-material" style={{ height: 500, width: '100%', margin: 'auto' }}>
         <AgGridReact
           ref={gridRef}
           columnDefs={columns}
@@ -162,7 +162,7 @@ function CustomerList() {
           animateRows="true"
         />
       </div>
-      <Snackbar 
+      <Snackbar
         open={open}
         autoHideDuration={3000}
         onClose={() => setOpen(false)}

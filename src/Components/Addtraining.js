@@ -16,12 +16,14 @@ const activities = ['Jogging', 'Boxing', 'Cycling', 'Walking', 'Gym training', '
 function Addtraining({ paramss, addTraining }) {
   const [open, setOpen] = useState(false);
 
-  const [training, setTraining] = useState({
+  const initialTrainingState = {
     date: '',
     activity: '',
     duration: '',
     customer: paramss.value
-  });
+  };
+
+  const [training, setTraining] = useState({ ...initialTrainingState });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,42 +31,32 @@ function Addtraining({ paramss, addTraining }) {
 
   const handleClose = () => {
     setOpen(false);
-    setTraining({
-      date: '',
-      activity: '',
-      duration: '',
-      customer: paramss.value
-    });
+    setTraining({ ...initialTrainingState });
   };
 
   const inputChanged = (event) => {
-    setTraining({...training, [event.target.name]: event.target.value});
+    setTraining({ ...training, [event.target.name]: event.target.value });
   };
 
   const handleChangeDate = (newValue) => {
-    setTraining({...training, date: newValue});
+    setTraining({ ...training, date: newValue });
   };
 
   const handleSave = () => {
-      addTraining(training);
-      setTraining({
-        date: '',
-        activity: '',
-        duration: '',
-        customer: paramss.value
-      });
-      setOpen(false);
+    addTraining(training);
+    setTraining({ ...initialTrainingState });
+    setOpen(false);
   }
 
   return (
     <div>
       <Button variant="text" onClick={handleClickOpen}>
-          ADD TRAINING
+        ADD TRAINING
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add training ({paramss.data.firstname} {paramss.data.lastname})</DialogTitle>
         <DialogContent>
-          <Stack spacing={2}>
+          <Stack spacing={2} marginTop={2}>
             <TextField
               name="activity"
               select
@@ -79,12 +71,12 @@ function Addtraining({ paramss, addTraining }) {
               ))}
             </TextField>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                    value={training.date}
-                    onChange={handleChangeDate}
-                    label="Date"
-                    renderInput={(params) => <TextField {...params} />}
-                />
+              <DateTimePicker
+                value={training.date}
+                onChange={handleChangeDate}
+                label="Date"
+                renderInput={(params) => <TextField {...params} />}
+              />
             </LocalizationProvider>
             <TextField
               margin="dense"
