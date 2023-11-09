@@ -13,26 +13,26 @@ function Statistics() {
   useEffect(() => {
     fetchTrainings();
   }, []);
-    
+
   const fetchTrainings = () => {
-    fetch('https://customerrest.herokuapp.com/gettrainings')
-    .then(response => response.json())
-    .then(data => {
+    fetch('https://traineeapp.azurewebsites.net/gettrainings')
+      .then(response => response.json())
+      .then(data => {
         setTrainings(data);
         setReady(true);
-    })
-    .catch(err => console.error(err))
+      })
+      .catch(err => console.error(err))
   };
 
   if (ready) {
     let myData = {};
     let grouppedObject = groupBy(trainings, 'activity');
     for (let item in grouppedObject) {
-        myData = {
-            "name": item,
-            "value": sumBy(grouppedObject[item], 'duration')
-        };
-        datas.push(myData);
+      myData = {
+        "name": item,
+        "value": sumBy(grouppedObject[item], 'duration')
+      };
+      datas.push(myData);
     };
     setData(datas);
     setReady(false);

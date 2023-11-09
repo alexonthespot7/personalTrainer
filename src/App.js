@@ -1,7 +1,6 @@
-import './App.css';
+import React from 'react';
 
 import Box from '@mui/material/Box';
-import React from 'react';
 
 import CustomAppBar from './Components/AppbarComponents/CustomAppBar';
 import CustomDrawer from './Components/AppbarComponents/CustomDrawer';
