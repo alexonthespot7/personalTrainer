@@ -1,49 +1,59 @@
 import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { groupBy, sumBy } from 'lodash';
+import { CircularProgress, Container } from '@mui/material';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Statistics() {
+  const [loading, setLoading] = useState(true);
   const [trainings, setTrainings] = useState([]);
-  const [ready, setReady] = useState(false);
-  const [data, setData] = useState([]);
 
-  let datas = [];
+  const fetchTrainings = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/gettrainings`);
+      const trainingsData = await response.json();
+
+      const grouppedObject = groupBy(trainingsData, 'activity');
+      const newData = Object.keys(grouppedObject).map(item => ({
+        name: item,
+        value: sumBy(grouppedObject[item], 'duration'),
+      }));
+
+      setTrainings(newData);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     fetchTrainings();
   }, []);
 
-  const fetchTrainings = () => {
-    fetch('https://traineeapp.azurewebsites.net/gettrainings')
-      .then(response => response.json())
-      .then(data => {
-        setTrainings(data);
-        setReady(true);
-      })
-      .catch(err => console.error(err))
-  };
-
-  if (ready) {
-    let myData = {};
-    let grouppedObject = groupBy(trainings, 'activity');
-    for (let item in grouppedObject) {
-      myData = {
-        "name": item,
-        "value": sumBy(grouppedObject[item], 'duration')
-      };
-      datas.push(myData);
-    };
-    setData(datas);
-    setReady(false);
-  };
+  if (loading) {
+    return (
+      <Container
+        component="main"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '80vh',
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
+  }
 
   return (
     <ResponsiveContainer width='90%' height='90%'>
       <BarChart
         width={100}
         height={50}
-        data={data}
+        data={trainings}
         margin={{
           top: 5,
           right: 30,

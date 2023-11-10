@@ -18,6 +18,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 function CustomerList() {
   const gridRef = useRef();
   const [customers, setCustomers] = useState([]);
@@ -35,7 +37,7 @@ function CustomerList() {
   const fetchCustomers = async () => {
     setLoading(true);
     try {
-      fetch('https://traineeapp.azurewebsites.net/api/customers')
+      fetch(`${apiUrl}/api/customers`)
         .then(response => response.json())
         .then(data => {
           setCustomers(data.content);
@@ -57,7 +59,7 @@ function CustomerList() {
 
   const addCustomer = async (newCustomer) => {
     try {
-      const response = await fetch('https://traineeapp.azurewebsites.net/api/customers', {
+      const response = await fetch(`${apiUrl}/api/customers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newCustomer),
@@ -111,7 +113,7 @@ function CustomerList() {
 
   const addTraining = async (newTraining) => {
     try {
-      const response = await fetch('https://traineeapp.azurewebsites.net/api/trainings', {
+      const response = await fetch(`${apiUrl}/api/trainings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTraining),
