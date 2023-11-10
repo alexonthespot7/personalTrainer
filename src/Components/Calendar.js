@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
+
+import { CircularProgress, Container } from '@mui/material';
+
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 import add from 'date-fns/add';
-import { CircularProgress } from '@mui/material';
-import { Container } from '@mui/system';
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Calendar() {
   const [trainings, setTrainings] = useState([]);
@@ -20,7 +23,7 @@ function Calendar() {
 
   const fetchTrainings = async () => {
     try {
-      const response = await fetch('https://traineeapp.azurewebsites.net/gettrainings');
+      const response = await fetch(`${apiUrl}/gettrainings`);
       const data = await response.json();
       setTrainings(data);
       setReady(true);

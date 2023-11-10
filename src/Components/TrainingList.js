@@ -3,15 +3,18 @@ import { AgGridReact } from 'ag-grid-react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
+
 import { format } from 'date-fns';
 
+import { Snackbar, IconButton } from '@mui/material';
+
 import DeleteIcon from '@mui/icons-material/Delete';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function TrainingList() {
   const [trainings, setTrainings] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [trainingDeleted, setTrainingDeleted] = useState(false);
 
   useEffect(() => {
     fetchTrainings();
@@ -22,41 +25,49 @@ function TrainingList() {
       return "null";
     } else {
       return params.data.customer.firstname + ' ' + params.data.customer.lastname;
-    };
-  };
+    }
+  }
 
   const dateValueGetter = (params) => {
     return format(new Date(params.data.date), "dd.MM.yyyy' 'hh:mm' 'aaa");
-  };
+  }
 
   const linkGetter = (params) => {
-    return `https://traineeapp.azurewebsites.net/api/trainings/${params.data.id}`;
-  };
+    return `${apiUrl}/api/trainings/${params.data.id}`;
+  }
 
-  const fetchTrainings = () => {
-    fetch('https://traineeapp.azurewebsites.net/gettrainings')
-      .then(response => response.json())
-      .then(data => setTrainings(data))
-      .catch(err => console.error(err))
-  };
-
-  const deleteTraining = (link) => {
-    if (window.confirm('Are you sure you want to delete this training?')) {
-      fetch(link, { method: 'DELETE' })
-        .then(response => {
-          if (!response.ok) {
-            alert('Something went wrong in deletion');
-          }
-          else {
-            fetchTrainings();
-            setOpen(true);
-          }
-        })
-        .catch(err => console.error(err))
+  const fetchTrainings = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/gettrainings`);
+      if (response.ok) {
+        const data = await response.json();
+        setTrainings(data);
+      } else {
+        alert('Something went wrong');
+      }
+    } catch (err) {
+      console.error(err);
     }
-  };
+  }
 
-  const [columns, setColumns] = useState([
+  const deleteTraining = async (link) => {
+    if (window.confirm('Are you sure you want to delete this training?')) {
+      try {
+        const response = await fetch(link, { method: 'DELETE' });
+        if (response.ok) {
+          await fetchTrainings();
+          setTrainingDeleted(true);
+        } else {
+          alert('Something went wrong in deletion');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Something went wrong in deletion');
+      }
+    }
+  }
+
+  const columns = [
     { field: 'activity', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 125 },
     { headerName: 'Date', valueGetter: dateValueGetter, sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 175 },
     { headerName: 'Duration (min)', field: 'duration', sortable: true, filter: true, width: 150, cellStyle: { 'text-align': 'left' } },
@@ -70,7 +81,7 @@ function TrainingList() {
           <DeleteIcon style={{ color: 'red' }} />
         </IconButton>
     }
-  ]);
+  ];
 
   return (
     <>
@@ -85,9 +96,9 @@ function TrainingList() {
         />
       </div>
       <Snackbar
-        open={open}
+        open={trainingDeleted}
         autoHideDuration={4000}
-        onClose={() => setOpen(false)}
+        onClose={() => setTrainingDeleted(false)}
         message='Training was deleted successfully'
       />
     </>
