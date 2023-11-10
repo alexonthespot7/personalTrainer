@@ -4,20 +4,20 @@ import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, }
 
 import AddIcon from '@mui/icons-material/Add';
 
+const initialCustomerState = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  phone: '',
+  streetaddress: '',
+  postcode: '',
+  city: ''
+}
+
 function Addcustomer({ addCustomer }) {
   const [open, setOpen] = useState(false);
 
-  const initialCustomerState = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    phone: '',
-    streetaddress: '',
-    postcode: '',
-    city: ''
-  }
-
-  const [customer, setCustomer] = useState({ ...initialCustomerState });
+  const [customer, setCustomer] = useState(initialCustomerState);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,7 +33,7 @@ function Addcustomer({ addCustomer }) {
 
   const handleSave = () => {
     addCustomer(customer);
-    setCustomer({ ...initialCustomerState });
+    setCustomer(initialCustomerState);
     setOpen(false);
   }
 

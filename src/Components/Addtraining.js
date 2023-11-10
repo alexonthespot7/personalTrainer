@@ -23,7 +23,7 @@ function Addtraining({ trainingParams, addTraining }) {
     customer: trainingParams.value
   }
 
-  const [training, setTraining] = useState({ ...initialTrainingState });
+  const [training, setTraining] = useState(initialTrainingState);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,7 +31,7 @@ function Addtraining({ trainingParams, addTraining }) {
 
   const handleClose = () => {
     setOpen(false);
-    setTraining({ ...initialTrainingState });
+    setTraining(initialTrainingState);
   }
 
   const inputChanged = (event) => {
@@ -44,7 +44,7 @@ function Addtraining({ trainingParams, addTraining }) {
 
   const handleSave = () => {
     addTraining(training);
-    setTraining({ ...initialTrainingState });
+    setTraining(initialTrainingState);
     setOpen(false);
   }
 
