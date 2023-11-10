@@ -22,11 +22,10 @@ function CustomerList() {
   const gridRef = useRef();
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [addCustomerSnack, setAddCusSnack] = useState(false);
-  const [editcustomerSnack, setEdCusSnack] = useState(false);
-  const [addTrainingSnack, setAddTrainSnack] = useState(false);
-
+  const [customerDeleted, setCustomerDeleted] = useState(false);
+  const [customerAdded, setCustomerAdded] = useState(false);
+  const [customerEdited, setCusomerEdited] = useState(false);
+  const [trainingAdded, setTrainingAdded] = useState(false);
 
 
   useEffect(() => {
@@ -66,7 +65,7 @@ function CustomerList() {
 
       if (response.ok) {
         await fetchCustomers();
-        setAddCusSnack(true);
+        setCustomerAdded(true);
       } else {
         alert('Something went wrong during the customer adding!');
       }
@@ -84,7 +83,7 @@ function CustomerList() {
           }
           else {
             fetchCustomers();
-            setOpen(true);
+            setCustomerDeleted(true);
           }
         })
         .catch(err => console.error(err))
@@ -101,7 +100,7 @@ function CustomerList() {
 
       if (response.ok) {
         await fetchCustomers();
-        setEdCusSnack(true);
+        setCusomerEdited(true);
       } else {
         alert('Something went wrong during the customer info updating');
       }
@@ -119,7 +118,7 @@ function CustomerList() {
       });
 
       if (response.ok) {
-        setAddTrainSnack(true);
+        setTrainingAdded(true);
       } else {
         alert('Something went wrong during the customer adding!');
       }
@@ -194,30 +193,30 @@ function CustomerList() {
         />
       </div>
       <Snackbar
-        open={open}
+        open={customerDeleted}
         autoHideDuration={3000}
-        onClose={() => setOpen(false)}
+        onClose={() => setCustomerDeleted(false)}
         message='Customer was deleted successfully'
       />
       <Snackbar
-        open={addCustomerSnack}
+        open={customerAdded}
         autoHideDuration={3000}
-        onClose={() => setAddCusSnack(false)}
+        onClose={() => setCustomerAdded(false)}
       >
         <Alert
-          onClose={() => setAddCusSnack(false)}
+          onClose={() => setCustomerAdded(false)}
           severity="success" sx={{ width: '100%' }}
         >
           New customer was added successfully!
         </Alert>
       </Snackbar>
       <Snackbar
-        open={editcustomerSnack}
+        open={customerEdited}
         autoHideDuration={3000}
-        onClose={() => setEdCusSnack(false)}
+        onClose={() => setCusomerEdited(false)}
       >
         <Alert
-          onClose={() => setEdCusSnack(false)}
+          onClose={() => setCusomerEdited(false)}
           severity="success"
           sx={{ width: '100%' }}
         >
@@ -225,12 +224,12 @@ function CustomerList() {
         </Alert>
       </Snackbar>
       <Snackbar
-        open={addTrainingSnack}
+        open={trainingAdded}
         autoHideDuration={3000}
-        onClose={() => setAddTrainSnack(false)}
+        onClose={() => setTrainingAdded(false)}
       >
         <Alert
-          onClose={() => setAddTrainSnack(false)}
+          onClose={() => setTrainingAdded(false)}
           severity="success" sx={{ width: '100%' }}
         >
           New training was added successfully!
