@@ -8,7 +8,6 @@
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
-* [Room for Improvement](#room-for-improvement)
 
 ## Technologies Used
 - React.js
@@ -37,5 +36,8 @@
 
 ## Screenshots
 <p align="center">
-  <img width="200" height="auto" src="assets/images/screenshots/screenshot_home.png"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img width="200" height="auto" src="assets/images/screenshots/screenshot_game.png">        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img width="200" height="auto" src="assets/images/screenshots/screenshot_gameOver.png">
+  <img width="900" height="auto" src="public/screenshots/Customers.jpg">
+  <img width="900" height="auto" src="public/screenshots/Trainings.jpg">
+  <img width="900" height="auto" src="public/screenshots/Statistics.jpg">
+  <img width="900" height="auto" src="public/screenshots/Calendar.jpg">
 </p>
