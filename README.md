@@ -5,12 +5,18 @@
 > You can find the final version of the application [_here_](https://personal-trainer-alex.netlify.app).
 
 ## Table of Contents
-* [Technologies Used](#technologies-used)
+* [Usage Guied](#usage-guide)
 * [Features](#features)
+* [Technologies Used](#technologies-used)
 * [Screenshots](#screenshots)
 
-## Technologies Used
-- React.js
+## Usage Guide
+1. Clone the project <br>```git clone https://github.com/alexonthespot7/personalTrainer.git```<br>
+2. run the following command in a terminal window (in the complete) directory:<br>
+```npm install```<br>
+3. run the following command in a terminal window (in the complete) directory:<br>
+```npm start```<br>
+4. Navigate to localhost:3000
 
 ## Features
 - Customer List:
@@ -33,6 +39,10 @@
 
 - User-Friendly Interface:
   - Features an intuitive and easy-to-navigate interface.
+ 
+## Technologies Used
+- React.js
+- css
 
 ## Screenshots
 <p align="center">
