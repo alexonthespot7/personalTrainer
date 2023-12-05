@@ -10,11 +10,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
+import { Snackbar } from '@mui/material';
 
 const activities = ['Jogging', 'Boxing', 'Cycling', 'Walking', 'Gym training', 'Spinning', 'Zumba'];
 
 function Addtraining({ trainingParams, addTraining }) {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState('');
 
   const initialTrainingState = {
     date: '',
@@ -43,6 +45,12 @@ function Addtraining({ trainingParams, addTraining }) {
   }
 
   const handleSave = () => {
+    for (const key of Object.keys(training)) {
+      if (training[key] === '') {
+        setError(`${key} is mandatory`);
+        return null;
+      }
+    }
     addTraining(training);
     setTraining(initialTrainingState);
     setOpen(false);
@@ -79,6 +87,7 @@ function Addtraining({ trainingParams, addTraining }) {
               />
             </LocalizationProvider>
             <TextField
+              type='number'
               margin="dense"
               name="duration"
               value={training.duration}
@@ -93,6 +102,12 @@ function Addtraining({ trainingParams, addTraining }) {
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
         </DialogActions>
+        <Snackbar
+          open={error !== ''}
+          autoHideDuration={3000}
+          onClose={() => setError('')}
+          message={error}
+        />
       </Dialog>
     </div>
   );

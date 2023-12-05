@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, } from '@mui/material';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 
@@ -16,7 +16,7 @@ const initialCustomerState = {
 
 function Addcustomer({ addCustomer }) {
   const [open, setOpen] = useState(false);
-
+  const [error, setError] = useState('');
   const [customer, setCustomer] = useState(initialCustomerState);
 
   const handleClickOpen = () => {
@@ -32,6 +32,13 @@ function Addcustomer({ addCustomer }) {
   }
 
   const handleSave = () => {
+    for (const key of Object.keys(customer)) {
+      if (customer[key] === '') {
+        setError(`${key} is mandatory`);
+        return null;
+      }
+    }
+
     addCustomer(customer);
     setCustomer(initialCustomerState);
     setOpen(false);
@@ -64,6 +71,12 @@ function Addcustomer({ addCustomer }) {
           <Button onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={error !== ''}
+        autoHideDuration={3000}
+        onClose={() => setError('')}
+        message={error}
+      />
     </div>
   );
 }
