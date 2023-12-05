@@ -8,6 +8,7 @@
 * [Usage Guied](#usage-guide)
 * [Features](#features)
 * [Technologies Used](#technologies-used)
+* [Dependencies](#dependencies)
 * [Screenshots](#screenshots)
 
 ## Usage Guide
@@ -43,6 +44,18 @@
 ## Technologies Used
 - React.js
 - css
+
+## Dependencies
+- [@date-io/date-fns](https://www.npmjs.com/package/@date-io/date-fns) (^1.3.13): Date management library supporting Date-Fns, facilitating date operations for UI components.
+- [date-fns](https://www.npmjs.com/package/date-fns) (^2.28.0): Versatile JavaScript date utility library for parsing, manipulating, and formatting dates.
+- [fullcalendar](https://fullcalendar.io/docs/react) (^5.11.*): FullCalendar package components for building interactive, customizable calendars in React.
+- [@mui/icons-material](https://www.npmjs.com/package/@mui/icons-material): Material-UI Icons library for customizable icons following Material Design guidelines.
+- [@mui/material](https://www.npmjs.com/package/@mui/material): Material-UI framework providing pre-designed React components.
+- [@mui/x-data-grid](https://www.npmjs.com/package/@mui/x-data-grid) (^5.10.0): Advanced data grid component library based on Material-UI.
+- [@mui/x-date-pickers](https://www.npmjs.com/package/@mui/x-date-pickers) (^5.0.0-alpha.2): Experimental date picker components from Material-UI.
+- [ag-grid-react](https://www.npmjs.com/package/ag-grid-react): React wrapper for AG-Grid to seamlessly integrate its functionalities.
+- [recharts](https://www.npmjs.com/package/recharts) (^2.1.9): React charting library for building responsive and customizable charts.
+- [lodash](https://www.npmjs.com/package/lodash) (^4.17.21): A comprehensive JavaScript utility library offering functions for common programming tasks.
 
 ## Screenshots
 <p align="center">
