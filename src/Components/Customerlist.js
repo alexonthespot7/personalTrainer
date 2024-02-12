@@ -130,13 +130,13 @@ function CustomerList() {
   }
 
   const columns = [
-    { headerName: 'First name', field: 'firstname', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 130 },
-    { headerName: 'Last name', field: 'lastname', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 130 },
-    { field: 'email', sortable: true, filter: true, width: 250, cellStyle: { 'text-align': 'left' } },
-    { field: 'phone', sortable: true, filter: true, width: 160, cellStyle: { 'text-align': 'left' } },
-    { headerName: 'Address', field: 'streetaddress', sortable: true, filter: true, width: 180, cellStyle: { 'text-align': 'left' } },
-    { field: 'postcode', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 120 },
-    { field: 'city', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 150 },
+    { headerName: 'First name', field: 'firstname', sortable: true, filter: true, cellStyle: { 'textAlign': 'left' }, width: 130 },
+    { headerName: 'Last name', field: 'lastname', sortable: true, filter: true, cellStyle: { 'textAlign': 'left' }, width: 130 },
+    { field: 'email', sortable: true, filter: true, width: 250, cellStyle: { 'textAlign': 'left' } },
+    { field: 'phone', sortable: true, filter: true, width: 160, cellStyle: { 'textAlign': 'left' } },
+    { headerName: 'Address', field: 'streetaddress', sortable: true, filter: true, width: 180, cellStyle: { 'textAlign': 'left' } },
+    { field: 'postcode', sortable: true, filter: true, cellStyle: { 'textAlign': 'left' }, width: 120 },
+    { field: 'city', sortable: true, filter: true, cellStyle: { 'textAlign': 'left' }, width: 150 },
     {
       headerName: '',
       width: 150,

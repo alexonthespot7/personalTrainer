@@ -68,10 +68,10 @@ function TrainingList() {
   }
 
   const columns = [
-    { field: 'activity', sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 125 },
-    { headerName: 'Date', valueGetter: dateValueGetter, sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 175 },
-    { headerName: 'Duration (min)', field: 'duration', sortable: true, filter: true, width: 150, cellStyle: { 'text-align': 'left' } },
-    { headerName: 'Customer', valueGetter: nameValueGetter, sortable: true, filter: true, cellStyle: { 'text-align': 'left' }, width: 155 },
+    { field: 'activity', sortable: true, filter: true, cellStyle: { 'textAlign': 'left' }, width: 125 },
+    { headerName: 'Date', valueGetter: dateValueGetter, sortable: true, filter: true, cellStyle: { 'textAlign': 'left' }, width: 175 },
+    { headerName: 'Duration (min)', field: 'duration', sortable: true, filter: true, width: 150, cellStyle: { 'textAlign': 'left' } },
+    { headerName: 'Customer', valueGetter: nameValueGetter, sortable: true, filter: true, cellStyle: { 'textAlign': 'left' }, width: 155 },
     {
       headerName: '',
       valueGetter: linkGetter,
