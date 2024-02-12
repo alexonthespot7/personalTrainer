@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Snackbar } from '@mui/material';
 
@@ -14,10 +14,15 @@ const initialState = {
   city: '',
 }
 
-function Editcustomer({ params, updateCustomer }) {
+interface EditcustomerProps {
+  params: any;
+  updateCustomer: any;
+}
+
+const Editcustomer: FC<EditcustomerProps> = ({ params, updateCustomer }) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
-  const [customer, setCustomer] = useState(initialState);
+  const [customer, setCustomer] = useState<any>(initialState);
 
   const handleClickOpen = () => {
     setCustomer({
@@ -36,7 +41,7 @@ function Editcustomer({ params, updateCustomer }) {
     setOpen(false);
   }
 
-  const inputChanged = (event) => {
+  const inputChanged = (event: any) => {
     setCustomer({ ...customer, [event.target.name]: event.target.value });
   }
 

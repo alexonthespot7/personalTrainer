@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 
-const initialCustomerState = {
+import { Customer } from '../types';
+
+const initialCustomerState: Customer = {
   firstname: '',
   lastname: '',
   email: '',
@@ -14,28 +16,32 @@ const initialCustomerState = {
   city: ''
 }
 
-function Addcustomer({ addCustomer }) {
-  const [open, setOpen] = useState(false);
-  const [error, setError] = useState('');
-  const [customer, setCustomer] = useState(initialCustomerState);
+interface AddcustomerProps {
+  addCustomer: (newCustomer: Customer) => Promise<void>;
+}
 
-  const handleClickOpen = () => {
+const Addcustomer: FC<AddcustomerProps> = ({ addCustomer }) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [customer, setCustomer] = useState<Customer>(initialCustomerState);
+
+  const handleClickOpen = (): void => {
     setOpen(true);
   }
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   }
 
-  const inputChanged = (event) => {
+  const inputChanged = (event: ChangeEvent<HTMLInputElement>): void => {
     setCustomer({ ...customer, [event.target.name]: event.target.value });
   }
 
-  const handleSave = () => {
+  const handleSave = (): void => {
     for (const key of Object.keys(customer)) {
       if (customer[key] === '') {
         setError(`${key} is mandatory`);
-        return null;
+        return;
       }
     }
 
@@ -47,7 +53,7 @@ function Addcustomer({ addCustomer }) {
   return (
     <div>
       <Button variant="contained" onClick={handleClickOpen} style={{ marginBottom: 20 }}>
-        <AddIcon color="white" />
+        <AddIcon color="inherit" />
         Customer
       </Button>
       <Dialog open={open} onClose={handleClose}>

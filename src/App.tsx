@@ -1,26 +1,28 @@
-import React from 'react';
+import { FC, useState } from 'react';
 
-import Box from '@mui/material/Box';
+import { Box } from "@mui/material";
 
 import CustomAppBar from './Components/AppbarComponents/CustomAppBar';
 import CustomDrawer from './Components/AppbarComponents/CustomDrawer';
 import MainContent from './Components/AppbarComponents/MainContent';
 
-function App() {
-  const [selectedCategory, setSelectedCategory] = React.useState('Customers');
+import { Category } from './types';
 
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+const App: FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<Category>('Customers');
 
-  const handleDrawerOpen = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
+  const handleDrawerOpen = (): void => {
     setIsDrawerOpen(true);
   }
 
-  const handleDrawerClose = () => {
+  const handleDrawerClose = (): void => {
     setIsDrawerOpen(false);
   }
 
-  const changeSelectedCategory = (text) => {
-    setSelectedCategory(text);
+  const changeSelectedCategory = (category: Category): void => {
+    setSelectedCategory(category);
   }
 
   return (

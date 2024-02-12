@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { styled } from '@mui/material/styles';
 
 import { Toolbar, IconButton, Typography } from '@mui/material';
-import MuiAppBar from '@mui/material/AppBar';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
+import { drawerWidth } from '../../constants';
 
-const drawerWidth = 240;
+interface AppBarProps extends MuiAppBarProps {
+    isDrawerOpen?: boolean;
+}
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'isDrawerOpen',
-})(({ theme, isDrawerOpen }) => ({
+})<AppBarProps>(({ theme, isDrawerOpen }) => ({
     transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -25,7 +28,12 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-const CustomAppBar = ({ handleDrawerOpen, isDrawerOpen }) => {
+interface CustomAppBarProps {
+    handleDrawerOpen: () => void;
+    isDrawerOpen: boolean;
+}
+
+const CustomAppBar: FC<CustomAppBarProps> = ({ handleDrawerOpen, isDrawerOpen }) => {
     return (
         <AppBar position="fixed">
             <Toolbar>

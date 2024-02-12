@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 import { styled } from '@mui/material/styles';
 
@@ -9,10 +9,21 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import EventIcon from '@mui/icons-material/Event';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 
-const drawerWidth = 240;
+import { Category } from '../../types';
+import { drawerWidth } from '../../constants';
 
-const Sidebar = ({ changeSelectedCategory }) => {
-    const menuItems = [
+
+interface SidebarProps {
+    changeSelectedCategory: (category: Category) => void;
+}
+
+interface MenuItem {
+    text: Category;
+    icon: JSX.Element;
+}
+
+const Sidebar: FC<SidebarProps> = ({ changeSelectedCategory }) => {
+    const menuItems: MenuItem[] = [
         { text: 'Customers', icon: <AccountBoxIcon /> },
         { text: 'Trainings', icon: <DirectionsRunIcon /> },
         { text: 'Calendar', icon: <EventIcon /> },
@@ -21,8 +32,8 @@ const Sidebar = ({ changeSelectedCategory }) => {
 
     return (
         <List>
-            {menuItems.map((item, index) => (
-                <ListItem key={index} button onClick={() => changeSelectedCategory(item.text)}>
+            {menuItems.map((item: MenuItem, index: number) => (
+                <ListItem key={index} button onClick={(): void => changeSelectedCategory(item.text)}>
                     <ListItemIcon>{item.icon}</ListItemIcon>
                     <ListItemText primary={item.text} />
                 </ListItem>
@@ -40,7 +51,13 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-const CustomDrawer = ({ handleDrawerClose, isDrawerOpen, changeSelectedCategory }) => {
+interface CustomDrawerProps {
+    handleDrawerClose: () => void;
+    isDrawerOpen: boolean;
+    changeSelectedCategory: (category: Category) => void;
+}
+
+const CustomDrawer: FC<CustomDrawerProps> = ({ handleDrawerClose, isDrawerOpen, changeSelectedCategory }) => {
     return (
         <Drawer
             sx={{

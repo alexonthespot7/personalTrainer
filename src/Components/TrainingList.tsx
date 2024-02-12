@@ -10,7 +10,7 @@ import { Snackbar, IconButton } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = 'https://traineeapp.azurewebsites.net';
 
 function TrainingList() {
   const [trainings, setTrainings] = useState([]);
@@ -20,7 +20,7 @@ function TrainingList() {
     fetchTrainings();
   }, []);
 
-  const nameValueGetter = (params) => {
+  const nameValueGetter = (params: any) => {
     if (params.data.customer === null) {
       return "null";
     } else {
@@ -28,11 +28,11 @@ function TrainingList() {
     }
   }
 
-  const dateValueGetter = (params) => {
+  const dateValueGetter = (params: any) => {
     return format(new Date(params.data.date), "dd.MM.yyyy' 'hh:mm' 'aaa");
   }
 
-  const linkGetter = (params) => {
+  const linkGetter = (params: any) => {
     return `${apiUrl}/api/trainings/${params.data.id}`;
   }
 
@@ -50,7 +50,7 @@ function TrainingList() {
     }
   }
 
-  const deleteTraining = async (link) => {
+  const deleteTraining = async (link: any) => {
     if (window.confirm('Are you sure you want to delete this training?')) {
       try {
         const response = await fetch(link, { method: 'DELETE' });
@@ -76,7 +76,7 @@ function TrainingList() {
       headerName: '',
       valueGetter: linkGetter,
       width: 100,
-      cellRenderer: params =>
+      cellRenderer: (params: any) =>
         <IconButton onClick={() => deleteTraining(params.value)}>
           <DeleteIcon style={{ color: 'red' }} />
         </IconButton>
@@ -92,7 +92,7 @@ function TrainingList() {
           pagination={true}
           paginationPageSize={5}
           suppressCellFocus={true}
-          animateRows="true"
+          animateRows
         />
       </div>
       <Snackbar

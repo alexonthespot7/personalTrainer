@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { groupBy, sumBy } from 'lodash';
 import { CircularProgress, Container } from '@mui/material';
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = 'https://traineeapp.azurewebsites.net';
 
 function Statistics() {
   const [loading, setLoading] = useState(true);
-  const [trainings, setTrainings] = useState([]);
+  const [trainings, setTrainings] = useState<any[]>([]);
 
   const fetchTrainings = async () => {
     try {
