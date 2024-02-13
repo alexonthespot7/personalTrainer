@@ -1,7 +1,7 @@
 export type Category = 'Customers' | 'Trainings' | 'Calendar' | 'Statistics';
 
-export type Customer = {
-    [key: string]: string;
+export interface Customer {
+    [key: string]: string | number;
     firstname: string;
     lastname: string;
     email: string;
@@ -9,14 +9,32 @@ export type Customer = {
     streetaddress: string;
     postcode: string;
     city: string;
-};
+}
+
+export interface CustomerWithId extends Customer {
+    id: number;
+}
 
 export type Activity = 'Jogging' | 'Boxing' | 'Cycling' | 'Walking' | 'Gym training' | 'Spinning' | 'Zumba';
 
-export type Training = {
-    [key: string]: any;
-    date: any | '',
+interface BaseTraining {
+    [key: string]: Date | Activity | number | string | CustomerWithId | null;
+    date: Date | null,
     activity: Activity | '',
     duration: number | '',
+}
+
+export interface Training extends BaseTraining {
     customer: string,
 }
+
+export interface TrainingWithCustomer extends BaseTraining {
+    customer: CustomerWithId,
+}
+
+export type TrainingParams = {
+    data: Customer;
+    value: string;
+}
+
+

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, } from '@mui/material';
 
@@ -59,7 +59,7 @@ const Addcustomer: FC<AddcustomerProps> = ({ addCustomer }) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New customer</DialogTitle>
         <DialogContent>
-          {Object.keys(initialCustomerState).map((field) => (
+          {Object.keys(initialCustomerState).map((field: string): JSX.Element => (
             <TextField
               key={field}
               margin="dense"
@@ -80,7 +80,7 @@ const Addcustomer: FC<AddcustomerProps> = ({ addCustomer }) => {
       <Snackbar
         open={error !== ''}
         autoHideDuration={3000}
-        onClose={() => setError('')}
+        onClose={(): void => setError('')}
         message={error}
       />
     </div>

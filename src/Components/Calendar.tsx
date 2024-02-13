@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { CircularProgress, Container } from '@mui/material';
 
@@ -10,11 +10,12 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 import add from 'date-fns/add';
+import { TrainingWithCustomer } from '../types';
 
 const apiUrl = 'https://traineeapp.azurewebsites.net';
 
 const Calendar: FC = () => {
-    const [trainings, setTrainings] = useState<any[]>([]);
+    const [trainings, setTrainings] = useState<TrainingWithCustomer[]>([]);
     const [ready, setReady] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [events, setEvents] = useState<any[]>([]);
@@ -23,12 +24,16 @@ const Calendar: FC = () => {
         fetchTrainings();
     }, []);
 
-    const fetchTrainings = async () => {
+    const fetchTrainings = async (): Promise<void> => {
         try {
-            const response = await fetch(`${apiUrl}/gettrainings`);
-            const data = await response.json();
-            setTrainings(data);
-            setReady(true);
+            const response: Response = await fetch(`${apiUrl}/gettrainings`);
+            if (response.ok) {
+                const data: TrainingWithCustomer[] = await response.json();
+                setTrainings(data);
+                setReady(true);
+            } else {
+                alert('Something went wrong');
+            }
         } catch (error) {
             console.error(error);
         }

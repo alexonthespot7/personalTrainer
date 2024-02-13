@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { CircularProgress, Container, IconButton, Snackbar, Button, Stack } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import { Customer, Training } from '../types';
+import { Customer, Training, TrainingParams } from '../types';
 
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -142,7 +142,7 @@ function CustomerList() {
             headerName: '',
             width: 150,
             field: 'links.0.href',
-            cellRenderer: (trainingParams: any) => <Addtraining trainingParams={trainingParams} addTraining={addTraining} />
+            cellRenderer: (trainingParams: TrainingParams) => <Addtraining trainingParams={trainingParams} addTraining={addTraining} />
         },
         {
             headerName: '',

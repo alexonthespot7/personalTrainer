@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -12,21 +12,21 @@ import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import { Snackbar } from '@mui/material';
 
-import { Activity, Training } from '../types';
+import { Activity, Training, TrainingParams } from '../types';
 
 const activities: Activity[] = ['Jogging', 'Boxing', 'Cycling', 'Walking', 'Gym training', 'Spinning', 'Zumba'];
 
 interface AddtrainingProps {
-    trainingParams: any;
+    trainingParams: TrainingParams;
     addTraining: (newTraining: Training) => Promise<void>;
 }
 
 const Addtraining: FC<AddtrainingProps> = ({ trainingParams, addTraining }) => {
-    const [open, setOpen] = useState(false);
-    const [error, setError] = useState('');
+    const [open, setOpen] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
 
     const initialTrainingState: Training = {
-        date: '',
+        date: null,
         activity: '',
         duration: '',
         customer: trainingParams.value
@@ -47,7 +47,7 @@ const Addtraining: FC<AddtrainingProps> = ({ trainingParams, addTraining }) => {
         setTraining({ ...training, [event.target.name]: event.target.value });
     }
 
-    const handleChangeDate = (newValue: any): void => {
+    const handleChangeDate = (newValue: Date | null): void => {
         setTraining({ ...training, date: newValue });
     }
 
