@@ -1,8 +1,7 @@
 # Personal trainer
 
 > Created as my final project for a university Front-end Programming course, the 'Personal Trainer' web app, built with React.js, simplifies customer and training management. It includes a Customer List for easy info access, Trainings List for quick removal of sessions, a Calendar for scheduling, and Statistics with clear diagrams showing total training durations.
-> 
-> You can find the final version of the application [_here_](https://personal-trainer-alex.netlify.app).
+
 
 ## Table of Contents
 * [Usage Guied](#usage-guide)
